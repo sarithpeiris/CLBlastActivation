@@ -1,0 +1,91 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 19,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "toolset-ClangCL",
+            "hidden": true,
+            "description": "Configure with ClangCL",
+            "toolset": {
+                "value": "ClangCL"
+            }
+        },
+        {
+            "name": "toolset-MSVC",
+            "hidden": true,
+            "description": "Configure with MSVC",
+            "toolset": {
+                "value": "host=x64"
+            }
+        },
+        {
+            "name": "toolset-GCC",
+            "hidden": true,
+            "description": "Configure with GCC",
+            "toolset": {
+                "value": "GCC"
+            }
+        },
+        {
+            "name": "toolset-Ninja",
+            "hidden": true,
+            "description": "Configure with Ninja",
+            "generator": "Ninja"
+        },
+        {
+            "name": "common",
+            "inherits": "toolset-MSVC",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "BUILD_SHARED_LIBS": true,
+                "CMAKE_EXPORT_COMPILE_COMMANDS": true,
+                "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/build/bin",
+                "CMAKE_LIBRARY_OUTPUT_DIRECTORY": "${sourceDir}/build/lib",
+                "CMAKE_ARCHIVE_OUTPUT_DIRECTORY": "${sourceDir}/build/lib",
+                "CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG": "${sourceDir}/build/bin",
+                "CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE": "${sourceDir}/build/bin",
+                "CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG": "${sourceDir}/build/lib",
+                "CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE": "${sourceDir}/build/lib",
+                "CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG": "${sourceDir}/build/lib",
+                "CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE": "${sourceDir}/build/lib"
+            }
+        },
+        {
+            "name": "clblast-activation-debug",
+            "inherits": "common",
+            "description": "Configure using the CLBlast CMakeLists.txt",
+            "cacheVariables": {
+                "VERBOSE": true,
+                "TUNERS": false
+            }
+        },
+        {
+            "name": "clblast-activation-release",
+            "inherits": "common",
+            "description": "Configure using the CLBlast CMakeLists.txt",
+            "cacheVariables": {
+                "VERBOSE": false,
+                "TUNERS": false
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "debug",
+            "configurePreset": "clblast-activation-debug",
+            "configuration": "Debug",
+            "verbose": true
+        },
+        {
+            "name": "release",
+            "configurePreset": "clblast-activation-release",
+            "configuration": "Release",
+            "verbose": false
+        }
+    ]
+}
