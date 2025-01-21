@@ -128,6 +128,9 @@ enum class KernelMode { kCrossCorrelation = 151, kConvolution = 152 };
 enum class Precision { kHalf = 16, kSingle = 32, kDouble = 64,
                        kComplexSingle = 3232, kComplexDouble = 6464, kAny = -1 };
 
+// Activation enum
+enum class Activation { kNone = 0, kTanh, kSigmoid, kReLU, kLeakyReLU, kELU };
+
 // =================================================================================================
 // BLAS level-1 (vector-vector) routines
 // =================================================================================================
@@ -274,7 +277,7 @@ StatusCode Min(const size_t n,
 
 // General matrix-vector multiplication: SGEMV/DGEMV/CGEMV/ZGEMV/HGEMV
 template <typename T>
-StatusCode Gemv(const Layout layout, const Transpose a_transpose,
+StatusCode Gemv(const Activation actv, const Layout layout, const Transpose a_transpose,
                 const size_t m, const size_t n,
                 const T alpha,
                 const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -520,7 +523,7 @@ StatusCode Spr2(const Layout layout, const Triangle triangle,
 
 // General matrix-matrix multiplication: SGEMM/DGEMM/CGEMM/ZGEMM/HGEMM
 template <typename T>
-StatusCode Gemm(const Layout layout, const Transpose a_transpose, const Transpose b_transpose,
+StatusCode Gemm(const Activation actv, const Layout layout, const Transpose a_transpose, const Transpose b_transpose,
                 const size_t m, const size_t n, const size_t k,
                 const T alpha,
                 const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,

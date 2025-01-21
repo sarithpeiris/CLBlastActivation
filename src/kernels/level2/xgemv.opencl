@@ -313,6 +313,8 @@ void Xgemv(const int m, const int n,
       // Stores the final result
       real yval = ygm[gid*y_inc + y_offset];
       AXPBY(ygm[gid*y_inc + y_offset], alpha, acc1[_w], beta, yval);
+      ygm[gid*y_inc + y_offset] = Activation(ygm[gid*y_inc + y_offset]);
+
     }
   }
 }

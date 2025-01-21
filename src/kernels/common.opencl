@@ -246,6 +246,40 @@ R"(
   #define COMPLEX_CONJUGATE(value) 
 #endif
 
+// Activations
+#if PRECISION == 3232 || PRECISION == 6464
+#if defined(ROUTINE_ACTV_TANH)
+#define Activation(value) value.x = tanh(value.x); value.y = tanh(value.y)
+#elif defined(ROUTINE_ACTV_SIGMOID)
+#define Activation(value) value.x = (ONE / (ONE + exp(-(value.x)))); value.y = (ONE / (ONE + exp(-(value.y))))
+#elif defined(ROUTINE_ACTV_RELU)
+#define Activation(value) value.x = (value.x > ZERO) ? value.x : ZERO; value.y = (value.y > ZERO) ? value.y : ZERO
+#elif defined(ROUTINE_ACTV_LEAKYRELU)
+#define Activation(value) value.x = (value.x > ZERO) ? value.x : (0.01f * value.x); value.y = (value.y > ZERO) ? value.y : (0.01f * value.y)
+#elif defined(ROUTINE_ACTV_ELU)
+#define Activation(value) value.x = (value.x > ZERO) ? value.x : (0.01f * exp(value.x - ONE)); value.y = (value.y > ZERO) ? value.y : (0.01f * exp(value.y - ONE))
+#else
+#define Activation(value) value
+#endif
+
+#else
+
+#if defined(ROUTINE_ACTV_TANH)
+#define Activation(value) tanh(value)
+#elif defined(ROUTINE_ACTV_SIGMOID)
+#define Activation(value) (ONE / (ONE + exp(-(value))))
+#elif defined(ROUTINE_ACTV_RELU)
+#define Activation(value) (value > ZERO) ? value : ZERO
+#elif defined(ROUTINE_ACTV_LEAKYRELU)
+#define Activation(value) (value > ZERO) ? value : (0.01f * value)
+#elif defined(ROUTINE_ACTV_ELU)
+#define Activation(value) (value > ZERO) ? value : (0.01f * exp(value - ONE))
+#else
+#define Activation(value) value
+#endif
+
+#endif
+
 // =================================================================================================
 
 // Force inlining functions or not: some compilers don't support the inline keyword

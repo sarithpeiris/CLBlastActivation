@@ -166,7 +166,7 @@ INLINE_FUNC void StoreResults(__global realM* cgm, realM c_value, const int _mi,
       AXPBY(result.sF, alpha, xval.sF, beta, yval.sF);
     #endif
   }
-  cgm[index] = result;
+  cgm[index] = Activation(result);
 }
 
 )"

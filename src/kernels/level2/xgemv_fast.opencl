@@ -184,6 +184,7 @@ void XgemvFast(const int m, const int n,
     const int gid = WPT2*get_global_id(0) + _w;
     real yval = ygm[gid*y_inc + y_offset];
     AXPBY(ygm[gid*y_inc + y_offset], alpha, acc2[_w], beta, yval);
+    ygm[gid*y_inc + y_offset] = Activation(ygm[gid*y_inc + y_offset]);
   }
 }
 
@@ -300,6 +301,8 @@ void XgemvFastRot(const int m, const int n,
   const int gid = get_global_id(0);
   real yval = ygm[gid * y_inc + y_offset];
   AXPBY(ygm[gid * y_inc + y_offset], alpha, acc3, beta, yval);
+  ygm[gid*y_inc + y_offset] = Activation(ygm[gid*y_inc + y_offset]);
+
 }
 
 // =================================================================================================

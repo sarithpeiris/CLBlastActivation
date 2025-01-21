@@ -608,7 +608,7 @@ template StatusCode PUBLIC_API Min<half>(const size_t,
 
 // General matrix-vector multiplication: SGEMV/DGEMV/CGEMV/ZGEMV/HGEMV
 template <typename T>
-StatusCode Gemv(const Layout layout, const Transpose a_transpose,
+StatusCode Gemv(const Activation actv, const Layout layout, const Transpose a_transpose,
                 const size_t m, const size_t n,
                 const T alpha,
                 const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -617,8 +617,34 @@ StatusCode Gemv(const Layout layout, const Transpose a_transpose,
                 cl_mem y_buffer, const size_t y_offset, const size_t y_inc,
                 cl_command_queue* queue, cl_event* event) {
   try {
+    std::string name;
+    switch (actv) {
+      case Activation::kTanh:
+        name = "ACTV_TANH";
+        break;
+
+      case Activation::kSigmoid:
+        name = "ACTV_SIGMOID";
+        break;
+
+      case Activation::kReLU:
+        name = "ACTV_RELU";
+        break;
+
+      case Activation::kLeakyReLU:
+        name = "ACTV_LEAKYRELU";
+        break;
+
+      case Activation::kELU:
+        name = "ACTV_ELU";
+        break;
+
+      default:
+        name = "GEMV";
+        break;
+    }
     auto queue_cpp = Queue(*queue);
-    auto routine = Xgemv<T>(queue_cpp, event);
+    auto routine = Xgemv<T>(queue_cpp, event, name);
     routine.DoGemv(layout, a_transpose,
                    m, n,
                    alpha,
@@ -629,7 +655,7 @@ StatusCode Gemv(const Layout layout, const Transpose a_transpose,
     return StatusCode::kSuccess;
   } catch (...) { return DispatchException(); }
 }
-template StatusCode PUBLIC_API Gemv<float>(const Layout, const Transpose,
+template StatusCode PUBLIC_API Gemv<float>(const Activation, const Layout, const Transpose,
                                            const size_t, const size_t,
                                            const float,
                                            const cl_mem, const size_t, const size_t,
@@ -637,7 +663,7 @@ template StatusCode PUBLIC_API Gemv<float>(const Layout, const Transpose,
                                            const float,
                                            cl_mem, const size_t, const size_t,
                                            cl_command_queue*, cl_event*);
-template StatusCode PUBLIC_API Gemv<double>(const Layout, const Transpose,
+template StatusCode PUBLIC_API Gemv<double>(const Activation, const Layout, const Transpose,
                                             const size_t, const size_t,
                                             const double,
                                             const cl_mem, const size_t, const size_t,
@@ -645,7 +671,7 @@ template StatusCode PUBLIC_API Gemv<double>(const Layout, const Transpose,
                                             const double,
                                             cl_mem, const size_t, const size_t,
                                             cl_command_queue*, cl_event*);
-template StatusCode PUBLIC_API Gemv<float2>(const Layout, const Transpose,
+template StatusCode PUBLIC_API Gemv<float2>(const Activation, const Layout, const Transpose,
                                             const size_t, const size_t,
                                             const float2,
                                             const cl_mem, const size_t, const size_t,
@@ -653,7 +679,7 @@ template StatusCode PUBLIC_API Gemv<float2>(const Layout, const Transpose,
                                             const float2,
                                             cl_mem, const size_t, const size_t,
                                             cl_command_queue*, cl_event*);
-template StatusCode PUBLIC_API Gemv<double2>(const Layout, const Transpose,
+template StatusCode PUBLIC_API Gemv<double2>(const Activation, const Layout, const Transpose,
                                              const size_t, const size_t,
                                              const double2,
                                              const cl_mem, const size_t, const size_t,
@@ -661,7 +687,7 @@ template StatusCode PUBLIC_API Gemv<double2>(const Layout, const Transpose,
                                              const double2,
                                              cl_mem, const size_t, const size_t,
                                              cl_command_queue*, cl_event*);
-template StatusCode PUBLIC_API Gemv<half>(const Layout, const Transpose,
+template StatusCode PUBLIC_API Gemv<half>(const Activation, const Layout, const Transpose,
                                           const size_t, const size_t,
                                           const half,
                                           const cl_mem, const size_t, const size_t,
@@ -1644,7 +1670,7 @@ template StatusCode PUBLIC_API Spr2<half>(const Layout, const Triangle,
 
 // General matrix-matrix multiplication: SGEMM/DGEMM/CGEMM/ZGEMM/HGEMM
 template <typename T>
-StatusCode Gemm(const Layout layout, const Transpose a_transpose, const Transpose b_transpose,
+StatusCode Gemm(const Activation actv, const Layout layout, const Transpose a_transpose, const Transpose b_transpose,
                 const size_t m, const size_t n, const size_t k,
                 const T alpha,
                 const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -1654,8 +1680,34 @@ StatusCode Gemm(const Layout layout, const Transpose a_transpose, const Transpos
                 cl_command_queue* queue, cl_event* event,
                 cl_mem temp_buffer) {
   try {
+    std::string name;
+    switch (actv) {
+      case Activation::kTanh:
+        name = "ACTV_TANH";
+        break;
+
+      case Activation::kSigmoid:
+        name = "ACTV_SIGMOID";
+        break;
+
+      case Activation::kReLU:
+        name = "ACTV_RELU";
+        break;
+
+      case Activation::kLeakyReLU:
+        name = "ACTV_LEAKYRELU";
+        break;
+
+      case Activation::kELU:
+        name = "ACTV_ELU";
+        break;
+
+      default:
+        name = "GEMM";
+        break;
+    }
     auto queue_cpp = Queue(*queue);
-    auto routine = Xgemm<T>(queue_cpp, event);
+    auto routine = Xgemm<T>(queue_cpp, event, name);
     const auto temp_buffer_provided = temp_buffer != nullptr;
     auto temp_buffer_cpp = temp_buffer_provided ? Buffer<T>(temp_buffer) : Buffer<T>(nullptr);
     routine.DoGemm(layout, a_transpose, b_transpose,
@@ -1669,7 +1721,7 @@ StatusCode Gemm(const Layout layout, const Transpose a_transpose, const Transpos
     return StatusCode::kSuccess;
   } catch (...) { return DispatchException(); }
 }
-template StatusCode PUBLIC_API Gemm<float>(const Layout, const Transpose, const Transpose,
+template StatusCode PUBLIC_API Gemm<float>(const Activation, const Layout, const Transpose, const Transpose,
                                            const size_t, const size_t, const size_t,
                                            const float,
                                            const cl_mem, const size_t, const size_t,
@@ -1677,7 +1729,7 @@ template StatusCode PUBLIC_API Gemm<float>(const Layout, const Transpose, const 
                                            const float,
                                            cl_mem, const size_t, const size_t,
                                            cl_command_queue*, cl_event*, cl_mem);
-template StatusCode PUBLIC_API Gemm<double>(const Layout, const Transpose, const Transpose,
+template StatusCode PUBLIC_API Gemm<double>(const Activation, const Layout, const Transpose, const Transpose,
                                             const size_t, const size_t, const size_t,
                                             const double,
                                             const cl_mem, const size_t, const size_t,
@@ -1685,7 +1737,7 @@ template StatusCode PUBLIC_API Gemm<double>(const Layout, const Transpose, const
                                             const double,
                                             cl_mem, const size_t, const size_t,
                                             cl_command_queue*, cl_event*, cl_mem);
-template StatusCode PUBLIC_API Gemm<float2>(const Layout, const Transpose, const Transpose,
+template StatusCode PUBLIC_API Gemm<float2>(const Activation, const Layout, const Transpose, const Transpose,
                                             const size_t, const size_t, const size_t,
                                             const float2,
                                             const cl_mem, const size_t, const size_t,
@@ -1693,7 +1745,7 @@ template StatusCode PUBLIC_API Gemm<float2>(const Layout, const Transpose, const
                                             const float2,
                                             cl_mem, const size_t, const size_t,
                                             cl_command_queue*, cl_event*, cl_mem);
-template StatusCode PUBLIC_API Gemm<double2>(const Layout, const Transpose, const Transpose,
+template StatusCode PUBLIC_API Gemm<double2>(const Activation, const Layout, const Transpose, const Transpose,
                                              const size_t, const size_t, const size_t,
                                              const double2,
                                              const cl_mem, const size_t, const size_t,
@@ -1701,7 +1753,7 @@ template StatusCode PUBLIC_API Gemm<double2>(const Layout, const Transpose, cons
                                              const double2,
                                              cl_mem, const size_t, const size_t,
                                              cl_command_queue*, cl_event*, cl_mem);
-template StatusCode PUBLIC_API Gemm<half>(const Layout, const Transpose, const Transpose,
+template StatusCode PUBLIC_API Gemm<half>(const Activation, const Layout, const Transpose, const Transpose,
                                           const size_t, const size_t, const size_t,
                                           const half,
                                           const cl_mem, const size_t, const size_t,

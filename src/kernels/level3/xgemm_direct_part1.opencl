@@ -188,7 +188,7 @@ INLINE_FUNC void StoreResultsDirect(__global real* cgm, const real c_value,
   else {
     AXPBY(result, alpha, c_value, beta, cgm[c_index + c_offset]);
   }
-  cgm[c_index + c_offset] = result;
+  cgm[c_index + c_offset] = Activation(result);
 }
 
 // Merges the results in Cpm with the global array in Cgm. This also performs the multiplication
@@ -212,7 +212,7 @@ INLINE_FUNC void StoreResultsChecked(__global real* cgm, const real c_value,
     else {
       AXPBY(result, alpha, c_value, beta, cgm[c_index + c_offset]);
     }
-    cgm[c_index + c_offset] = result;
+    cgm[c_index + c_offset] = Activation(result);
   }
 }
 

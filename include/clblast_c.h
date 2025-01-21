@@ -132,6 +132,16 @@ typedef enum CLBlastPrecision_ { CLBlastPrecisionHalf = 16, CLBlastPrecisionSing
                                  CLBlastPrecisionDouble = 64, CLBlastPrecisionComplexSingle = 3232,
                                  CLBlastPrecisionComplexDouble = 6464 } CLBlastPrecision;
 
+// Activation enum
+typedef enum CLBlastActivation_ {
+  CLBlastActivationNone = 0,
+  CLBlastActivationTanh,
+  CLBlastActivationSigmoid,
+  CLBlastActivationReLU,
+  CLBlastActivationLeakyReLU,
+  CLBlastActivationELU
+} CLBlastActivation;
+
 // =================================================================================================
 // BLAS level-1 (vector-vector) routines
 // =================================================================================================
@@ -481,7 +491,7 @@ CLBlastStatusCode PUBLIC_API CLBlastiHmin(const size_t n,
 // =================================================================================================
 
 // General matrix-vector multiplication: SGEMV/DGEMV/CGEMV/ZGEMV/HGEMV
-CLBlastStatusCode PUBLIC_API CLBlastSgemv(const CLBlastLayout layout, const CLBlastTranspose a_transpose,
+CLBlastStatusCode PUBLIC_API CLBlastSgemv(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose,
                                           const size_t m, const size_t n,
                                           const float alpha,
                                           const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -489,7 +499,7 @@ CLBlastStatusCode PUBLIC_API CLBlastSgemv(const CLBlastLayout layout, const CLBl
                                           const float beta,
                                           cl_mem y_buffer, const size_t y_offset, const size_t y_inc,
                                           cl_command_queue* queue, cl_event* event);
-CLBlastStatusCode PUBLIC_API CLBlastDgemv(const CLBlastLayout layout, const CLBlastTranspose a_transpose,
+CLBlastStatusCode PUBLIC_API CLBlastDgemv(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose,
                                           const size_t m, const size_t n,
                                           const double alpha,
                                           const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -497,7 +507,7 @@ CLBlastStatusCode PUBLIC_API CLBlastDgemv(const CLBlastLayout layout, const CLBl
                                           const double beta,
                                           cl_mem y_buffer, const size_t y_offset, const size_t y_inc,
                                           cl_command_queue* queue, cl_event* event);
-CLBlastStatusCode PUBLIC_API CLBlastCgemv(const CLBlastLayout layout, const CLBlastTranspose a_transpose,
+CLBlastStatusCode PUBLIC_API CLBlastCgemv(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose,
                                           const size_t m, const size_t n,
                                           const cl_float2 alpha,
                                           const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -505,7 +515,7 @@ CLBlastStatusCode PUBLIC_API CLBlastCgemv(const CLBlastLayout layout, const CLBl
                                           const cl_float2 beta,
                                           cl_mem y_buffer, const size_t y_offset, const size_t y_inc,
                                           cl_command_queue* queue, cl_event* event);
-CLBlastStatusCode PUBLIC_API CLBlastZgemv(const CLBlastLayout layout, const CLBlastTranspose a_transpose,
+CLBlastStatusCode PUBLIC_API CLBlastZgemv(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose,
                                           const size_t m, const size_t n,
                                           const cl_double2 alpha,
                                           const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -513,7 +523,7 @@ CLBlastStatusCode PUBLIC_API CLBlastZgemv(const CLBlastLayout layout, const CLBl
                                           const cl_double2 beta,
                                           cl_mem y_buffer, const size_t y_offset, const size_t y_inc,
                                           cl_command_queue* queue, cl_event* event);
-CLBlastStatusCode PUBLIC_API CLBlastHgemv(const CLBlastLayout layout, const CLBlastTranspose a_transpose,
+CLBlastStatusCode PUBLIC_API CLBlastHgemv(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose,
                                           const size_t m, const size_t n,
                                           const cl_half alpha,
                                           const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -1049,7 +1059,7 @@ CLBlastStatusCode PUBLIC_API CLBlastHspr2(const CLBlastLayout layout, const CLBl
 // =================================================================================================
 
 // General matrix-matrix multiplication: SGEMM/DGEMM/CGEMM/ZGEMM/HGEMM
-CLBlastStatusCode PUBLIC_API CLBlastSgemm(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode PUBLIC_API CLBlastSgemm(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                           const size_t m, const size_t n, const size_t k,
                                           const float alpha,
                                           const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -1057,7 +1067,7 @@ CLBlastStatusCode PUBLIC_API CLBlastSgemm(const CLBlastLayout layout, const CLBl
                                           const float beta,
                                           cl_mem c_buffer, const size_t c_offset, const size_t c_ld,
                                           cl_command_queue* queue, cl_event* event);
-CLBlastStatusCode PUBLIC_API CLBlastDgemm(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode PUBLIC_API CLBlastDgemm(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                           const size_t m, const size_t n, const size_t k,
                                           const double alpha,
                                           const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -1065,7 +1075,7 @@ CLBlastStatusCode PUBLIC_API CLBlastDgemm(const CLBlastLayout layout, const CLBl
                                           const double beta,
                                           cl_mem c_buffer, const size_t c_offset, const size_t c_ld,
                                           cl_command_queue* queue, cl_event* event);
-CLBlastStatusCode PUBLIC_API CLBlastCgemm(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode PUBLIC_API CLBlastCgemm(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                           const size_t m, const size_t n, const size_t k,
                                           const cl_float2 alpha,
                                           const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -1073,7 +1083,7 @@ CLBlastStatusCode PUBLIC_API CLBlastCgemm(const CLBlastLayout layout, const CLBl
                                           const cl_float2 beta,
                                           cl_mem c_buffer, const size_t c_offset, const size_t c_ld,
                                           cl_command_queue* queue, cl_event* event);
-CLBlastStatusCode PUBLIC_API CLBlastZgemm(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode PUBLIC_API CLBlastZgemm(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                           const size_t m, const size_t n, const size_t k,
                                           const cl_double2 alpha,
                                           const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -1081,7 +1091,7 @@ CLBlastStatusCode PUBLIC_API CLBlastZgemm(const CLBlastLayout layout, const CLBl
                                           const cl_double2 beta,
                                           cl_mem c_buffer, const size_t c_offset, const size_t c_ld,
                                           cl_command_queue* queue, cl_event* event);
-CLBlastStatusCode PUBLIC_API CLBlastHgemm(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode PUBLIC_API CLBlastHgemm(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                           const size_t m, const size_t n, const size_t k,
                                           const cl_half alpha,
                                           const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,

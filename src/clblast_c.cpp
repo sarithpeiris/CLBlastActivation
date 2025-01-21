@@ -1026,7 +1026,7 @@ CLBlastStatusCode CLBlastiHmin(const size_t n,
 // =================================================================================================
 
 // GEMV
-CLBlastStatusCode CLBlastSgemv(const CLBlastLayout layout, const CLBlastTranspose a_transpose,
+CLBlastStatusCode CLBlastSgemv(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose,
                                const size_t m, const size_t n,
                                const float alpha,
                                const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -1036,7 +1036,7 @@ CLBlastStatusCode CLBlastSgemv(const CLBlastLayout layout, const CLBlastTranspos
                                cl_command_queue* queue, cl_event* event) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::Gemv(static_cast<clblast::Layout>(layout),
+      clblast::Gemv(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                     static_cast<clblast::Transpose>(a_transpose),
                     m, n,
                     alpha,
@@ -1048,7 +1048,7 @@ CLBlastStatusCode CLBlastSgemv(const CLBlastLayout layout, const CLBlastTranspos
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastDgemv(const CLBlastLayout layout, const CLBlastTranspose a_transpose,
+CLBlastStatusCode CLBlastDgemv(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose,
                                const size_t m, const size_t n,
                                const double alpha,
                                const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -1058,7 +1058,7 @@ CLBlastStatusCode CLBlastDgemv(const CLBlastLayout layout, const CLBlastTranspos
                                cl_command_queue* queue, cl_event* event) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::Gemv(static_cast<clblast::Layout>(layout),
+      clblast::Gemv(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                     static_cast<clblast::Transpose>(a_transpose),
                     m, n,
                     alpha,
@@ -1070,7 +1070,7 @@ CLBlastStatusCode CLBlastDgemv(const CLBlastLayout layout, const CLBlastTranspos
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastCgemv(const CLBlastLayout layout, const CLBlastTranspose a_transpose,
+CLBlastStatusCode CLBlastCgemv(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose,
                                const size_t m, const size_t n,
                                const cl_float2 alpha,
                                const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -1080,7 +1080,7 @@ CLBlastStatusCode CLBlastCgemv(const CLBlastLayout layout, const CLBlastTranspos
                                cl_command_queue* queue, cl_event* event) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::Gemv(static_cast<clblast::Layout>(layout),
+      clblast::Gemv(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                     static_cast<clblast::Transpose>(a_transpose),
                     m, n,
                     float2{alpha.s[0], alpha.s[1]},
@@ -1092,7 +1092,7 @@ CLBlastStatusCode CLBlastCgemv(const CLBlastLayout layout, const CLBlastTranspos
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastZgemv(const CLBlastLayout layout, const CLBlastTranspose a_transpose,
+CLBlastStatusCode CLBlastZgemv(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose,
                                const size_t m, const size_t n,
                                const cl_double2 alpha,
                                const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -1102,7 +1102,7 @@ CLBlastStatusCode CLBlastZgemv(const CLBlastLayout layout, const CLBlastTranspos
                                cl_command_queue* queue, cl_event* event) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::Gemv(static_cast<clblast::Layout>(layout),
+      clblast::Gemv(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                     static_cast<clblast::Transpose>(a_transpose),
                     m, n,
                     double2{alpha.s[0], alpha.s[1]},
@@ -1114,7 +1114,7 @@ CLBlastStatusCode CLBlastZgemv(const CLBlastLayout layout, const CLBlastTranspos
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastHgemv(const CLBlastLayout layout, const CLBlastTranspose a_transpose,
+CLBlastStatusCode CLBlastHgemv(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose,
                                const size_t m, const size_t n,
                                const cl_half alpha,
                                const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -1124,7 +1124,7 @@ CLBlastStatusCode CLBlastHgemv(const CLBlastLayout layout, const CLBlastTranspos
                                cl_command_queue* queue, cl_event* event) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::Gemv(static_cast<clblast::Layout>(layout),
+      clblast::Gemv(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                     static_cast<clblast::Transpose>(a_transpose),
                     m, n,
                     alpha,
@@ -2629,7 +2629,7 @@ CLBlastStatusCode CLBlastHspr2(const CLBlastLayout layout, const CLBlastTriangle
 // =================================================================================================
 
 // GEMM
-CLBlastStatusCode CLBlastSgemm(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastSgemm(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                const size_t m, const size_t n, const size_t k,
                                const float alpha,
                                const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -2639,7 +2639,7 @@ CLBlastStatusCode CLBlastSgemm(const CLBlastLayout layout, const CLBlastTranspos
                                cl_command_queue* queue, cl_event* event) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::Gemm(static_cast<clblast::Layout>(layout),
+      clblast::Gemm(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                     static_cast<clblast::Transpose>(a_transpose),
                     static_cast<clblast::Transpose>(b_transpose),
                     m, n, k,
@@ -2652,7 +2652,7 @@ CLBlastStatusCode CLBlastSgemm(const CLBlastLayout layout, const CLBlastTranspos
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastDgemm(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastDgemm(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                const size_t m, const size_t n, const size_t k,
                                const double alpha,
                                const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -2662,7 +2662,7 @@ CLBlastStatusCode CLBlastDgemm(const CLBlastLayout layout, const CLBlastTranspos
                                cl_command_queue* queue, cl_event* event) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::Gemm(static_cast<clblast::Layout>(layout),
+      clblast::Gemm(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                     static_cast<clblast::Transpose>(a_transpose),
                     static_cast<clblast::Transpose>(b_transpose),
                     m, n, k,
@@ -2675,7 +2675,7 @@ CLBlastStatusCode CLBlastDgemm(const CLBlastLayout layout, const CLBlastTranspos
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastCgemm(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastCgemm(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                const size_t m, const size_t n, const size_t k,
                                const cl_float2 alpha,
                                const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -2685,7 +2685,7 @@ CLBlastStatusCode CLBlastCgemm(const CLBlastLayout layout, const CLBlastTranspos
                                cl_command_queue* queue, cl_event* event) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::Gemm(static_cast<clblast::Layout>(layout),
+      clblast::Gemm(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                     static_cast<clblast::Transpose>(a_transpose),
                     static_cast<clblast::Transpose>(b_transpose),
                     m, n, k,
@@ -2698,7 +2698,7 @@ CLBlastStatusCode CLBlastCgemm(const CLBlastLayout layout, const CLBlastTranspos
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastZgemm(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastZgemm(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                const size_t m, const size_t n, const size_t k,
                                const cl_double2 alpha,
                                const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -2708,7 +2708,7 @@ CLBlastStatusCode CLBlastZgemm(const CLBlastLayout layout, const CLBlastTranspos
                                cl_command_queue* queue, cl_event* event) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::Gemm(static_cast<clblast::Layout>(layout),
+      clblast::Gemm(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                     static_cast<clblast::Transpose>(a_transpose),
                     static_cast<clblast::Transpose>(b_transpose),
                     m, n, k,
@@ -2721,7 +2721,7 @@ CLBlastStatusCode CLBlastZgemm(const CLBlastLayout layout, const CLBlastTranspos
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastHgemm(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastHgemm(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                const size_t m, const size_t n, const size_t k,
                                const cl_half alpha,
                                const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -2731,7 +2731,7 @@ CLBlastStatusCode CLBlastHgemm(const CLBlastLayout layout, const CLBlastTranspos
                                cl_command_queue* queue, cl_event* event) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::Gemm(static_cast<clblast::Layout>(layout),
+      clblast::Gemm(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                     static_cast<clblast::Transpose>(a_transpose),
                     static_cast<clblast::Transpose>(b_transpose),
                     m, n, k,
@@ -4213,7 +4213,7 @@ CLBlastStatusCode CLBlastHgemmStridedBatched(const CLBlastLayout layout, const C
 // =================================================================================================
 
 // GEMM with temporary buffer (optional, for advanced users)
-CLBlastStatusCode CLBlastSgemmWithTempBuffer(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastSgemmWithTempBuffer(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                              const size_t m, const size_t n, const size_t k,
                                              const float alpha,
                                              const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -4224,7 +4224,7 @@ CLBlastStatusCode CLBlastSgemmWithTempBuffer(const CLBlastLayout layout, const C
                                              cl_mem temp_buffer) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::Gemm(static_cast<clblast::Layout>(layout),
+      clblast::Gemm(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                     static_cast<clblast::Transpose>(a_transpose),
                     static_cast<clblast::Transpose>(b_transpose),
                     m, n, k,
@@ -4237,7 +4237,7 @@ CLBlastStatusCode CLBlastSgemmWithTempBuffer(const CLBlastLayout layout, const C
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastDgemmWithTempBuffer(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastDgemmWithTempBuffer(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                              const size_t m, const size_t n, const size_t k,
                                              const double alpha,
                                              const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -4248,7 +4248,7 @@ CLBlastStatusCode CLBlastDgemmWithTempBuffer(const CLBlastLayout layout, const C
                                              cl_mem temp_buffer) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::Gemm(static_cast<clblast::Layout>(layout),
+      clblast::Gemm(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                     static_cast<clblast::Transpose>(a_transpose),
                     static_cast<clblast::Transpose>(b_transpose),
                     m, n, k,
@@ -4261,7 +4261,7 @@ CLBlastStatusCode CLBlastDgemmWithTempBuffer(const CLBlastLayout layout, const C
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastCgemmWithTempBuffer(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastCgemmWithTempBuffer(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                              const size_t m, const size_t n, const size_t k,
                                              const cl_float2 alpha,
                                              const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -4272,7 +4272,7 @@ CLBlastStatusCode CLBlastCgemmWithTempBuffer(const CLBlastLayout layout, const C
                                              cl_mem temp_buffer) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::Gemm(static_cast<clblast::Layout>(layout),
+      clblast::Gemm(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                     static_cast<clblast::Transpose>(a_transpose),
                     static_cast<clblast::Transpose>(b_transpose),
                     m, n, k,
@@ -4285,7 +4285,7 @@ CLBlastStatusCode CLBlastCgemmWithTempBuffer(const CLBlastLayout layout, const C
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastZgemmWithTempBuffer(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastZgemmWithTempBuffer(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                              const size_t m, const size_t n, const size_t k,
                                              const cl_double2 alpha,
                                              const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -4296,7 +4296,7 @@ CLBlastStatusCode CLBlastZgemmWithTempBuffer(const CLBlastLayout layout, const C
                                              cl_mem temp_buffer) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::Gemm(static_cast<clblast::Layout>(layout),
+      clblast::Gemm(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                     static_cast<clblast::Transpose>(a_transpose),
                     static_cast<clblast::Transpose>(b_transpose),
                     m, n, k,
@@ -4309,7 +4309,7 @@ CLBlastStatusCode CLBlastZgemmWithTempBuffer(const CLBlastLayout layout, const C
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastHgemmWithTempBuffer(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastHgemmWithTempBuffer(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                              const size_t m, const size_t n, const size_t k,
                                              const cl_half alpha,
                                              const cl_mem a_buffer, const size_t a_offset, const size_t a_ld,
@@ -4320,7 +4320,7 @@ CLBlastStatusCode CLBlastHgemmWithTempBuffer(const CLBlastLayout layout, const C
                                              cl_mem temp_buffer) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::Gemm(static_cast<clblast::Layout>(layout),
+      clblast::Gemm(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                     static_cast<clblast::Transpose>(a_transpose),
                     static_cast<clblast::Transpose>(b_transpose),
                     m, n, k,
