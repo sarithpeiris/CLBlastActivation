@@ -7,41 +7,17 @@
     },
     "configurePresets": [
         {
-            "name": "toolset-ClangCL",
-            "hidden": true,
-            "description": "Configure with ClangCL",
-            "toolset": {
-                "value": "ClangCL"
-            }
-        },
-        {
-            "name": "toolset-MSVC",
-            "hidden": true,
-            "description": "Configure with MSVC",
-            "toolset": {
-                "value": "host=x64"
-            }
-        },
-        {
-            "name": "toolset-GCC",
-            "hidden": true,
-            "description": "Configure with GCC",
-            "toolset": {
-                "value": "GCC"
-            }
-        },
-        {
-            "name": "toolset-Ninja",
-            "hidden": true,
-            "description": "Configure with Ninja",
-            "generator": "Ninja"
-        },
-        {
             "name": "common",
-            "inherits": "toolset-MSVC",
             "hidden": true,
             "binaryDir": "${sourceDir}/build",
+            "generator": "Ninja",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
             "cacheVariables": {
+                "CMAKE_C_COMPILER": "cl.exe",
+                "CMAKE_CXX_COMPILER": "cl.exe",
                 "BUILD_SHARED_LIBS": true,
                 "CMAKE_EXPORT_COMPILE_COMMANDS": true,
                 "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/build/bin",
@@ -60,6 +36,7 @@
             "inherits": "common",
             "description": "Configure using the CLBlast CMakeLists.txt",
             "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
                 "VERBOSE": true,
                 "TUNERS": false
             }
@@ -69,6 +46,7 @@
             "inherits": "common",
             "description": "Configure using the CLBlast CMakeLists.txt",
             "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
                 "VERBOSE": false,
                 "TUNERS": false
             }
