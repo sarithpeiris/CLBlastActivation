@@ -3927,7 +3927,7 @@ CLBlastStatusCode CLBlastHaxpyBatched(const size_t n,
 }
 
 // GEMM
-CLBlastStatusCode CLBlastSgemmBatched(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastSgemmBatched(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                       const size_t m, const size_t n, const size_t k,
                                       const float *alphas,
                                       const cl_mem a_buffer, const size_t *a_offsets, const size_t a_ld,
@@ -3944,7 +3944,7 @@ CLBlastStatusCode CLBlastSgemmBatched(const CLBlastLayout layout, const CLBlastT
   }
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::GemmBatched(static_cast<clblast::Layout>(layout),
+      clblast::GemmBatched(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                            static_cast<clblast::Transpose>(a_transpose),
                            static_cast<clblast::Transpose>(b_transpose),
                            m, n, k,
@@ -3958,7 +3958,7 @@ CLBlastStatusCode CLBlastSgemmBatched(const CLBlastLayout layout, const CLBlastT
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastDgemmBatched(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastDgemmBatched(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                       const size_t m, const size_t n, const size_t k,
                                       const double *alphas,
                                       const cl_mem a_buffer, const size_t *a_offsets, const size_t a_ld,
@@ -3975,7 +3975,7 @@ CLBlastStatusCode CLBlastDgemmBatched(const CLBlastLayout layout, const CLBlastT
   }
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::GemmBatched(static_cast<clblast::Layout>(layout),
+      clblast::GemmBatched(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                            static_cast<clblast::Transpose>(a_transpose),
                            static_cast<clblast::Transpose>(b_transpose),
                            m, n, k,
@@ -3989,7 +3989,7 @@ CLBlastStatusCode CLBlastDgemmBatched(const CLBlastLayout layout, const CLBlastT
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastCgemmBatched(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastCgemmBatched(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                       const size_t m, const size_t n, const size_t k,
                                       const cl_float2 *alphas,
                                       const cl_mem a_buffer, const size_t *a_offsets, const size_t a_ld,
@@ -4006,7 +4006,7 @@ CLBlastStatusCode CLBlastCgemmBatched(const CLBlastLayout layout, const CLBlastT
   }
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::GemmBatched(static_cast<clblast::Layout>(layout),
+      clblast::GemmBatched(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                            static_cast<clblast::Transpose>(a_transpose),
                            static_cast<clblast::Transpose>(b_transpose),
                            m, n, k,
@@ -4020,7 +4020,7 @@ CLBlastStatusCode CLBlastCgemmBatched(const CLBlastLayout layout, const CLBlastT
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastZgemmBatched(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastZgemmBatched(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                       const size_t m, const size_t n, const size_t k,
                                       const cl_double2 *alphas,
                                       const cl_mem a_buffer, const size_t *a_offsets, const size_t a_ld,
@@ -4037,7 +4037,7 @@ CLBlastStatusCode CLBlastZgemmBatched(const CLBlastLayout layout, const CLBlastT
   }
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::GemmBatched(static_cast<clblast::Layout>(layout),
+      clblast::GemmBatched(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                            static_cast<clblast::Transpose>(a_transpose),
                            static_cast<clblast::Transpose>(b_transpose),
                            m, n, k,
@@ -4051,7 +4051,7 @@ CLBlastStatusCode CLBlastZgemmBatched(const CLBlastLayout layout, const CLBlastT
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastHgemmBatched(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastHgemmBatched(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                       const size_t m, const size_t n, const size_t k,
                                       const cl_half *alphas,
                                       const cl_mem a_buffer, const size_t *a_offsets, const size_t a_ld,
@@ -4068,7 +4068,7 @@ CLBlastStatusCode CLBlastHgemmBatched(const CLBlastLayout layout, const CLBlastT
   }
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::GemmBatched(static_cast<clblast::Layout>(layout),
+      clblast::GemmBatched(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                            static_cast<clblast::Transpose>(a_transpose),
                            static_cast<clblast::Transpose>(b_transpose),
                            m, n, k,
@@ -4084,7 +4084,7 @@ CLBlastStatusCode CLBlastHgemmBatched(const CLBlastLayout layout, const CLBlastT
 }
 
 // GEMM
-CLBlastStatusCode CLBlastSgemmStridedBatched(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastSgemmStridedBatched(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                              const size_t m, const size_t n, const size_t k,
                                              const float alpha,
                                              const cl_mem a_buffer, const size_t a_offset, const size_t a_ld, const size_t a_stride,
@@ -4095,7 +4095,7 @@ CLBlastStatusCode CLBlastSgemmStridedBatched(const CLBlastLayout layout, const C
                                              cl_command_queue* queue, cl_event* event) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::GemmStridedBatched(static_cast<clblast::Layout>(layout),
+      clblast::GemmStridedBatched(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                                   static_cast<clblast::Transpose>(a_transpose),
                                   static_cast<clblast::Transpose>(b_transpose),
                                   m, n, k,
@@ -4109,7 +4109,7 @@ CLBlastStatusCode CLBlastSgemmStridedBatched(const CLBlastLayout layout, const C
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastDgemmStridedBatched(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastDgemmStridedBatched(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                              const size_t m, const size_t n, const size_t k,
                                              const double alpha,
                                              const cl_mem a_buffer, const size_t a_offset, const size_t a_ld, const size_t a_stride,
@@ -4120,7 +4120,7 @@ CLBlastStatusCode CLBlastDgemmStridedBatched(const CLBlastLayout layout, const C
                                              cl_command_queue* queue, cl_event* event) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::GemmStridedBatched(static_cast<clblast::Layout>(layout),
+      clblast::GemmStridedBatched(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                                   static_cast<clblast::Transpose>(a_transpose),
                                   static_cast<clblast::Transpose>(b_transpose),
                                   m, n, k,
@@ -4134,7 +4134,7 @@ CLBlastStatusCode CLBlastDgemmStridedBatched(const CLBlastLayout layout, const C
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastCgemmStridedBatched(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastCgemmStridedBatched(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                              const size_t m, const size_t n, const size_t k,
                                              const cl_float2 alpha,
                                              const cl_mem a_buffer, const size_t a_offset, const size_t a_ld, const size_t a_stride,
@@ -4145,7 +4145,7 @@ CLBlastStatusCode CLBlastCgemmStridedBatched(const CLBlastLayout layout, const C
                                              cl_command_queue* queue, cl_event* event) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::GemmStridedBatched(static_cast<clblast::Layout>(layout),
+      clblast::GemmStridedBatched(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                                   static_cast<clblast::Transpose>(a_transpose),
                                   static_cast<clblast::Transpose>(b_transpose),
                                   m, n, k,
@@ -4159,7 +4159,7 @@ CLBlastStatusCode CLBlastCgemmStridedBatched(const CLBlastLayout layout, const C
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastZgemmStridedBatched(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastZgemmStridedBatched(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                              const size_t m, const size_t n, const size_t k,
                                              const cl_double2 alpha,
                                              const cl_mem a_buffer, const size_t a_offset, const size_t a_ld, const size_t a_stride,
@@ -4170,7 +4170,7 @@ CLBlastStatusCode CLBlastZgemmStridedBatched(const CLBlastLayout layout, const C
                                              cl_command_queue* queue, cl_event* event) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::GemmStridedBatched(static_cast<clblast::Layout>(layout),
+      clblast::GemmStridedBatched(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                                   static_cast<clblast::Transpose>(a_transpose),
                                   static_cast<clblast::Transpose>(b_transpose),
                                   m, n, k,
@@ -4184,7 +4184,7 @@ CLBlastStatusCode CLBlastZgemmStridedBatched(const CLBlastLayout layout, const C
     );
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
 }
-CLBlastStatusCode CLBlastHgemmStridedBatched(const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
+CLBlastStatusCode CLBlastHgemmStridedBatched(const CLBlastActivation actv, const CLBlastLayout layout, const CLBlastTranspose a_transpose, const CLBlastTranspose b_transpose,
                                              const size_t m, const size_t n, const size_t k,
                                              const cl_half alpha,
                                              const cl_mem a_buffer, const size_t a_offset, const size_t a_ld, const size_t a_stride,
@@ -4195,7 +4195,7 @@ CLBlastStatusCode CLBlastHgemmStridedBatched(const CLBlastLayout layout, const C
                                              cl_command_queue* queue, cl_event* event) {
   try {
     return static_cast<CLBlastStatusCode>(
-      clblast::GemmStridedBatched(static_cast<clblast::Layout>(layout),
+      clblast::GemmStridedBatched(static_cast<clblast::Activation>(actv), static_cast<clblast::Layout>(layout),
                                   static_cast<clblast::Transpose>(a_transpose),
                                   static_cast<clblast::Transpose>(b_transpose),
                                   m, n, k,

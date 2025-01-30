@@ -674,7 +674,7 @@ StatusCode AxpyBatched(const size_t n,
 
 // Batched version of GEMM: SGEMMBATCHED/DGEMMBATCHED/CGEMMBATCHED/ZGEMMBATCHED/HGEMMBATCHED
 template <typename T>
-StatusCode GemmBatched(const Layout layout, const Transpose a_transpose, const Transpose b_transpose,
+StatusCode GemmBatched(const Activation actv, const Layout layout, const Transpose a_transpose, const Transpose b_transpose,
                        const size_t m, const size_t n, const size_t k,
                        const T *alphas,
                        const cl_mem a_buffer, const size_t *a_offsets, const size_t a_ld,
@@ -686,7 +686,7 @@ StatusCode GemmBatched(const Layout layout, const Transpose a_transpose, const T
 
 // StridedBatched version of GEMM: SGEMMSTRIDEDBATCHED/DGEMMSTRIDEDBATCHED/CGEMMSTRIDEDBATCHED/ZGEMMSTRIDEDBATCHED/HGEMMSTRIDEDBATCHED
 template <typename T>
-StatusCode GemmStridedBatched(const Layout layout, const Transpose a_transpose, const Transpose b_transpose,
+StatusCode GemmStridedBatched(const Activation actv, const Layout layout, const Transpose a_transpose, const Transpose b_transpose,
                               const size_t m, const size_t n, const size_t k,
                               const T alpha,
                               const cl_mem a_buffer, const size_t a_offset, const size_t a_ld, const size_t a_stride,

@@ -2452,7 +2452,7 @@ template StatusCode PUBLIC_API AxpyBatched<half>(const size_t,
 
 // Batched version of GEMM: SGEMMBATCHED/DGEMMBATCHED/CGEMMBATCHED/ZGEMMBATCHED/HGEMMBATCHED
 template <typename T>
-StatusCode GemmBatched(const Layout layout, const Transpose a_transpose, const Transpose b_transpose,
+StatusCode GemmBatched(const Activation actv, const Layout layout, const Transpose a_transpose, const Transpose b_transpose,
                        const size_t m, const size_t n, const size_t k,
                        const T *alphas,
                        const cl_mem a_buffer, const size_t *a_offsets, const size_t a_ld,
@@ -2462,8 +2462,34 @@ StatusCode GemmBatched(const Layout layout, const Transpose a_transpose, const T
                        const size_t batch_count,
                        cl_command_queue* queue, cl_event* event) {
   try {
+    std::string name;
+    switch (actv) {
+      case Activation::kTanh:
+        name = "ACTV_TANH";
+        break;
+
+      case Activation::kSigmoid:
+        name = "ACTV_SIGMOID";
+        break;
+
+      case Activation::kReLU:
+        name = "ACTV_RELU";
+        break;
+
+      case Activation::kLeakyReLU:
+        name = "ACTV_LEAKYRELU";
+        break;
+
+      case Activation::kELU:
+        name = "ACTV_ELU";
+        break;
+
+      default:
+        name = "GEMMBATCHED";
+        break;
+    }
     auto queue_cpp = Queue(*queue);
-    auto routine = XgemmBatched<T>(queue_cpp, event);
+    auto routine = XgemmBatched<T>(queue_cpp, event, name);
     auto alphas_cpp = std::vector<T>();
     auto betas_cpp = std::vector<T>();
     auto a_offsets_cpp = std::vector<size_t>();
@@ -2487,7 +2513,7 @@ StatusCode GemmBatched(const Layout layout, const Transpose a_transpose, const T
     return StatusCode::kSuccess;
   } catch (...) { return DispatchException(); }
 }
-template StatusCode PUBLIC_API GemmBatched<float>(const Layout, const Transpose, const Transpose,
+template StatusCode PUBLIC_API GemmBatched<float>(const Activation, const Layout, const Transpose, const Transpose,
                                                   const size_t, const size_t, const size_t,
                                                   const float*,
                                                   const cl_mem, const size_t*, const size_t,
@@ -2496,7 +2522,7 @@ template StatusCode PUBLIC_API GemmBatched<float>(const Layout, const Transpose,
                                                   cl_mem, const size_t*, const size_t,
                                                   const size_t,
                                                   cl_command_queue*, cl_event*);
-template StatusCode PUBLIC_API GemmBatched<double>(const Layout, const Transpose, const Transpose,
+template StatusCode PUBLIC_API GemmBatched<double>(const Activation, const Layout, const Transpose, const Transpose,
                                                    const size_t, const size_t, const size_t,
                                                    const double*,
                                                    const cl_mem, const size_t*, const size_t,
@@ -2505,7 +2531,7 @@ template StatusCode PUBLIC_API GemmBatched<double>(const Layout, const Transpose
                                                    cl_mem, const size_t*, const size_t,
                                                    const size_t,
                                                    cl_command_queue*, cl_event*);
-template StatusCode PUBLIC_API GemmBatched<float2>(const Layout, const Transpose, const Transpose,
+template StatusCode PUBLIC_API GemmBatched<float2>(const Activation, const Layout, const Transpose, const Transpose,
                                                    const size_t, const size_t, const size_t,
                                                    const float2*,
                                                    const cl_mem, const size_t*, const size_t,
@@ -2514,7 +2540,7 @@ template StatusCode PUBLIC_API GemmBatched<float2>(const Layout, const Transpose
                                                    cl_mem, const size_t*, const size_t,
                                                    const size_t,
                                                    cl_command_queue*, cl_event*);
-template StatusCode PUBLIC_API GemmBatched<double2>(const Layout, const Transpose, const Transpose,
+template StatusCode PUBLIC_API GemmBatched<double2>(const Activation, const Layout, const Transpose, const Transpose,
                                                     const size_t, const size_t, const size_t,
                                                     const double2*,
                                                     const cl_mem, const size_t*, const size_t,
@@ -2523,7 +2549,7 @@ template StatusCode PUBLIC_API GemmBatched<double2>(const Layout, const Transpos
                                                     cl_mem, const size_t*, const size_t,
                                                     const size_t,
                                                     cl_command_queue*, cl_event*);
-template StatusCode PUBLIC_API GemmBatched<half>(const Layout, const Transpose, const Transpose,
+template StatusCode PUBLIC_API GemmBatched<half>(const Activation, const Layout, const Transpose, const Transpose,
                                                  const size_t, const size_t, const size_t,
                                                  const half*,
                                                  const cl_mem, const size_t*, const size_t,
@@ -2535,7 +2561,7 @@ template StatusCode PUBLIC_API GemmBatched<half>(const Layout, const Transpose, 
 
 // StridedBatched version of GEMM: SGEMMSTRIDEDBATCHED/DGEMMSTRIDEDBATCHED/CGEMMSTRIDEDBATCHED/ZGEMMSTRIDEDBATCHED/HGEMMSTRIDEDBATCHED
 template <typename T>
-StatusCode GemmStridedBatched(const Layout layout, const Transpose a_transpose, const Transpose b_transpose,
+StatusCode GemmStridedBatched(const Activation actv, const Layout layout, const Transpose a_transpose, const Transpose b_transpose,
                               const size_t m, const size_t n, const size_t k,
                               const T alpha,
                               const cl_mem a_buffer, const size_t a_offset, const size_t a_ld, const size_t a_stride,
@@ -2545,8 +2571,34 @@ StatusCode GemmStridedBatched(const Layout layout, const Transpose a_transpose, 
                               const size_t batch_count,
                               cl_command_queue* queue, cl_event* event) {
   try {
+    std::string name;
+    switch (actv) {
+      case Activation::kTanh:
+        name = "ACTV_TANH";
+        break;
+
+      case Activation::kSigmoid:
+        name = "ACTV_SIGMOID";
+        break;
+
+      case Activation::kReLU:
+        name = "ACTV_RELU";
+        break;
+
+      case Activation::kLeakyReLU:
+        name = "ACTV_LEAKYRELU";
+        break;
+
+      case Activation::kELU:
+        name = "ACTV_ELU";
+        break;
+
+      default:
+        name = "GEMMSTRIDEDBATCHED";
+        break;
+    }
     auto queue_cpp = Queue(*queue);
-    auto routine = XgemmStridedBatched<T>(queue_cpp, event);
+    auto routine = XgemmStridedBatched<T>(queue_cpp, event, name);
     routine.DoGemmStridedBatched(layout, a_transpose, b_transpose,
                                  m, n, k,
                                  alpha,
@@ -2558,7 +2610,7 @@ StatusCode GemmStridedBatched(const Layout layout, const Transpose a_transpose, 
     return StatusCode::kSuccess;
   } catch (...) { return DispatchException(); }
 }
-template StatusCode PUBLIC_API GemmStridedBatched<float>(const Layout, const Transpose, const Transpose,
+template StatusCode PUBLIC_API GemmStridedBatched<float>(const Activation, const Layout, const Transpose, const Transpose,
                                                          const size_t, const size_t, const size_t,
                                                          const float,
                                                          const cl_mem, const size_t, const size_t, const size_t,
@@ -2567,7 +2619,7 @@ template StatusCode PUBLIC_API GemmStridedBatched<float>(const Layout, const Tra
                                                          cl_mem, const size_t, const size_t, const size_t,
                                                          const size_t,
                                                          cl_command_queue*, cl_event*);
-template StatusCode PUBLIC_API GemmStridedBatched<double>(const Layout, const Transpose, const Transpose,
+template StatusCode PUBLIC_API GemmStridedBatched<double>(const Activation, const Layout, const Transpose, const Transpose,
                                                           const size_t, const size_t, const size_t,
                                                           const double,
                                                           const cl_mem, const size_t, const size_t, const size_t,
@@ -2576,7 +2628,7 @@ template StatusCode PUBLIC_API GemmStridedBatched<double>(const Layout, const Tr
                                                           cl_mem, const size_t, const size_t, const size_t,
                                                           const size_t,
                                                           cl_command_queue*, cl_event*);
-template StatusCode PUBLIC_API GemmStridedBatched<float2>(const Layout, const Transpose, const Transpose,
+template StatusCode PUBLIC_API GemmStridedBatched<float2>(const Activation, const Layout, const Transpose, const Transpose,
                                                           const size_t, const size_t, const size_t,
                                                           const float2,
                                                           const cl_mem, const size_t, const size_t, const size_t,
@@ -2585,7 +2637,7 @@ template StatusCode PUBLIC_API GemmStridedBatched<float2>(const Layout, const Tr
                                                           cl_mem, const size_t, const size_t, const size_t,
                                                           const size_t,
                                                           cl_command_queue*, cl_event*);
-template StatusCode PUBLIC_API GemmStridedBatched<double2>(const Layout, const Transpose, const Transpose,
+template StatusCode PUBLIC_API GemmStridedBatched<double2>(const Activation, const Layout, const Transpose, const Transpose,
                                                            const size_t, const size_t, const size_t,
                                                            const double2,
                                                            const cl_mem, const size_t, const size_t, const size_t,
@@ -2594,7 +2646,7 @@ template StatusCode PUBLIC_API GemmStridedBatched<double2>(const Layout, const T
                                                            cl_mem, const size_t, const size_t, const size_t,
                                                            const size_t,
                                                            cl_command_queue*, cl_event*);
-template StatusCode PUBLIC_API GemmStridedBatched<half>(const Layout, const Transpose, const Transpose,
+template StatusCode PUBLIC_API GemmStridedBatched<half>(const Activation, const Layout, const Transpose, const Transpose,
                                                         const size_t, const size_t, const size_t,
                                                         const half,
                                                         const cl_mem, const size_t, const size_t, const size_t,
