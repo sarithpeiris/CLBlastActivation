@@ -1,5 +1,5 @@
 {
-    "version": 3,
+    "version": 6,
     "cmakeMinimumRequired": {
         "major": 3,
         "minor": 19,
@@ -10,14 +10,7 @@
             "name": "common",
             "hidden": true,
             "binaryDir": "${sourceDir}/build",
-            "generator": "Ninja",
-            "architecture": {
-                "value": "x64",
-                "strategy": "external"
-            },
             "cacheVariables": {
-                "CMAKE_C_COMPILER": "cl.exe",
-                "CMAKE_CXX_COMPILER": "cl.exe",
                 "BUILD_SHARED_LIBS": true,
                 "CMAKE_EXPORT_COMPILE_COMMANDS": true,
                 "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/build/bin",
@@ -64,6 +57,36 @@
             "configurePreset": "clblast-activation-release",
             "configuration": "Release",
             "verbose": false
+        }
+    ],
+    "workflowPresets": [
+        {
+            "name": "workflow-debug",
+            "displayName": "building workflow-debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "clblast-activation-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "debug"
+                }
+            ]
+        },
+        {
+            "name": "workflow-release",
+            "displayName": "building workflow-release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "clblast-activation-release"
+                },
+                {
+                    "type": "build",
+                    "name": "release"
+                }
+            ]
         }
     ]
 }

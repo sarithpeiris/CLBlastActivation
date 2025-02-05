@@ -1693,7 +1693,7 @@ CLBlastStatusCode PUBLIC_API CLBlastHGemmTempBufferSize(const CLBlastLayout layo
 
 // CLBlast stores binaries of compiled kernels into a cache in case the same kernel is used later on
 // for the same device. This cache can be cleared to free up system memory or in case of debugging.
-CLBlastStatusCode PUBLIC_API CLBlastClearCache();
+CLBlastStatusCode PUBLIC_API CLBlastClearCache(void);
 
 // The cache can also be pre-initialized for a specific device with all possible CLBlast kernels.
 // Further CLBlast routine calls will then run at maximum speed.

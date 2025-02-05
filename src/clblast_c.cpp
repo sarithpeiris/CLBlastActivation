@@ -4450,7 +4450,7 @@ CLBlastStatusCode CLBlastHGemmTempBufferSize(const CLBlastLayout layout, const C
 // =================================================================================================
 
 // Clears the cache of stored binaries
-CLBlastStatusCode CLBlastClearCache() {
+CLBlastStatusCode CLBlastClearCache(void) {
   try {
     return static_cast<CLBlastStatusCode>(clblast::ClearCache());
   } catch (...) { return static_cast<CLBlastStatusCode>(clblast::DispatchExceptionForC()); }
